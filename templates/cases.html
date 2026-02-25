@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cases</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <h2><a class="navbar-brand" href="#">AI Clue Organizer</a></h2>
+    <ul class="navbar-nav ms-auto">
+      <strong><li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Home</a></li></strong>
+      <strong><li class="nav-item"><a class="nav-link" href="{{ url_for('search') }}">Search</a></li></strong>
+      <strong><li class="nav-item"><a class="nav-link" href="{{ url_for('cases') }}">Cases</a></li></strong>
+      <strong><li class="nav-item"><a class="nav-link" href="{{ url_for('analyze') }}">Analyze Case</a></li></strong>
+      <strong><li class="nav-item"><a class="nav-link" href="{{ url_for('visualization') }}">Visualization</a></li></strong>
+      <strong><li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li></strong>
+    </ul>
+  </div>
+</nav>
+<div class="container mt-4">
+<h2 style="color:#ced4da" >All Cases</h2>
+
+<div class="card mb-4 shadow">
+  <div class="card-body">
+    <h5 >Add New Case</h5>
+    <form method="POST">
+      <div class="row">
+        <div class="col-md-3 mb-2"><input type="datetime-local" name="date_reported" class="form-control" placeholder="Date Reported"></div>
+        <div class="col-md-3 mb-2"><input type="datetime-local" name="date_of_occurence" class="form-control" placeholder="Date of Occurence"></div>
+        <div class="col-md-3 mb-2"><input type="text" name="city_crime" class="form-control" placeholder="City"></div>
+          <div class="col-md-3 mb-2"><input type="text" name="code_crime" class="form-control" placeholder="Crime Code"></div>
+      </div>
+      <div class="row">
+       <div class="col-md-3 mb-2"><input type="text" name="victim_name" class="form-control" placeholder="Victim Name" required></div>
+        <div class="col-md-3 mb-2"><input type="number" name="victim_age" class="form-control" placeholder="Victim Age"></div>
+        <div class="col-md-3 mb-2"><input type="text" name="victim_gender" class="form-control" placeholder="Victim Gender"></div>
+          <div class="col-md-3 mb-2"><input type="text" name="weapon_used" class="form-control" placeholder="Weapon Used"></div>
+      </div>
+      <div class="row">
+       <div class="col-md-3 mb-2"><input type="text" name="crime_domain" class="form-control" placeholder="Crime Domain"></div>
+        <div class="col-md-3 mb-2"><input type="text" name="police_deployed" class="form-control" placeholder="Police Deployed"></div>
+        <div class="col-md-3 mb-2"><input type="text" name="case_closed" class="form-control" placeholder="Case Closed "></div>
+        <div class="col-md-3 mb-2"><input type="date" name="case_closed_date" class="form-control" placeholder="Case Closed Date"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mb-2"><textarea name="crime_description" class="form-control" placeholder="Case Description"></textarea></div>
+      </div>
+      <button type="submit" class="btn btn-success">Add Case</button>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  {% for case in cases %}
+  <div class="col-md-6 mb-3">
+    <div class="card shadow">
+      <div class="card-body">
+        <h5>Report Number: {{ case.report_number }}</h5>
+        <p><strong>Victim:</strong> {{ case.victim_name }} ({{ case.victim_age }}, {{ case.victim_gender }})</p>
+        <p><strong>Crime:</strong> {{ case.crime_domain }} | {{ case.code_crime }}</p>
+        <p><strong>City:</strong> {{ case.city }} | <strong>Police:</strong> {{ case.police_deployed }}</p>
+        <p><strong>Description:</strong> {{ case.crime_description }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+</body>
+</html>
